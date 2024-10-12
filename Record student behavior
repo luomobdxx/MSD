@@ -1,0 +1,21 @@
+class BehaviorIncident:
+    def __init__(self, description, severity):
+        self.description = description
+        self.severity = severity
+
+class StudentBehaviorManagement:
+    def __init__(self):
+        self.student_incidents = {}
+
+    def record_incident(self, student_id, incident):
+        if student_id not in self.student_incidents:
+            self.student_incidents[student_id] = []
+        self.student_incidents[student_id].append(incident)
+
+    def view_student_incidents(self, student_id):
+        if student_id in self.student_incidents:
+            print(f"Behavior incidents for student with ID {student_id}:")
+            for incident in self.student_incidents[student_id]:
+                print(f"Description: {incident.description}, Severity: {incident.severity}")
+        else:
+            print(f"Student with ID {student_id} not found.")
