@@ -1,0 +1,24 @@
+class Exam:
+    def __init__(self, exam_name):
+        self.exam_name = exam_name
+        self.student_scores = {}
+
+    def record_score(self, student, score):
+        self.student_scores[student] = score
+
+class ExamManagement:
+    def __init__(self):
+        self.exams = []
+
+    def add_exam(self, exam_name):
+        new_exam = Exam(exam_name)
+        self.exams.append(new_exam)
+
+    def view_exam_scores(self, exam_name):
+        for exam in self.exams:
+            if exam.exam_name == exam_name:
+                print(f"Scores for {exam.exam_name}:")
+                for student, score in exam.student_scores.items():
+                    print(f"{student.name}: {score}")
+                return
+        print(f"Exam {exam_name} not found.")
