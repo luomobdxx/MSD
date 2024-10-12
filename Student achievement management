@@ -1,0 +1,38 @@
+class Student:
+    def __init__(self, name, student_id):
+        self.name = name
+        self.student_id = student_id
+        self.grades = {}
+
+    def add_grade(self, subject, grade):
+        self.grades[subject] = grade
+
+class TeachingManagement:
+    def __init__(self):
+        self.students = []
+
+    def add_student(self, student):
+        self.students.append(student)
+
+    def view_student_grades(self, student_id):
+        for student in self.students:
+            if student.student_id == student_id:
+                print(f"Grades for student {student.name}:")
+                for subject, grade in student.grades.items():
+                    print(f"{subject}: {grade}")
+                return
+        print(f"Student with ID {student_id} not found.")
+
+    def calculate_average_grade(self, student_id):
+        for student in self.students:
+            if student.student_id == student_id:
+                total = 0
+                count = 0
+                for grade in student.grades.values():
+                    total += grade
+                    count += 1
+                if count > 0:
+                    return total / count
+                else:
+                    return 0
+        print(f"Student with ID {student_id} not found.")
