@@ -1,0 +1,23 @@
+class StudentManager:
+    def __init__(self):
+        self.students = []
+
+    def add_student(self, name, student_id):
+        new_student = {'name': name, 'student_id': student_id, 'attendance': []}
+        self.students.append(new_student)
+
+    def mark_attendance(self, student_id, present=True):
+        for student in self.students:
+            if student['student_id'] == student_id:
+                student['attendance'].append(present)
+                return
+        print(f"Student with ID {student_id} not found.")
+
+    def view_student_attendance(self, student_id):
+        for student in self.students:
+            if student['student_id'] == student_id:
+                print(f"Attendance for student {student['name']}:")
+                for status in student['attendance']:
+                    print("Present" if status else "Absent")
+                return
+        print(f"Student with ID {student_id} not found.")

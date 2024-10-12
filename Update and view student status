@@ -1,0 +1,16 @@
+class EnrollmentStatus:
+    def __init__(self, status):
+        self.status = status
+
+class StudentStatusManagement:
+    def __init__(self):
+        self.student_statuses = {}
+
+    def update_status(self, student_id, status):
+        self.student_statuses[student_id] = EnrollmentStatus(status)
+
+    def view_status(self, student_id):
+        if student_id in self.student_statuses:
+            print(f"Status for student with ID {student_id}: {self.student_statuses[student_id].status}")
+        else:
+            print(f"Student with ID {student_id} not found.")
