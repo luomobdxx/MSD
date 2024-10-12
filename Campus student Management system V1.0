@@ -1,0 +1,87 @@
+import datetime
+
+class Teacher:
+    def __init__(self, teacher_name):
+        self.teacher_name = teacher_name
+        self.schedule = {}  # 存储教师的时间安排，键为日期时间，值为布尔值表示是否空闲
+
+class Classroom:
+    def __init__(self, classroom_number):
+        self.classroom_number = classroom_number
+        self.availability = {}  # 存储教室的可用性，键为日期时间，值为布尔值表示是否可用
+
+class Course:
+    def __init__(self, course_name):
+        self.course_name = course_name
+        self.students_enrolled = []
+        self.schedule = None  # 新增课程安排属性
+
+class CourseManagement:
+    def __init__(self):
+        self.courses = []
+        self.teachers = []  # 存储所有教师
+        self.classrooms = []  # 存储所有教室
+
+    def add_course(self, course_name):
+        new_course = Course(course_name)
+        self.courses.append(new_course)
+
+    def add_teacher(self, teacher_name):
+        new_teacher = Teacher(teacher_name)
+        self.teachers.append(new_teacher)
+
+    def add_classroom(self, classroom_number):
+        new_classroom = Classroom(classroom_number)
+        self.classrooms.append(new_classroom)
+
+    def set_teacher_schedule(self, teacher_name, date_time, is_available):
+        for teacher in self.teachers:
+            if teacher.teacher_name == teacher_name:
+                teacher.schedule[date_time] = is_available
+                return
+        print(f"Teacher {teacher_name} not found.")
+
+    def set_classroom_availability(self, classroom_number, date_time, is_available):
+        for classroom in self.classrooms:
+            if classroom.classroom_number == classroom_number:
+                classroom.availability[date_time] = is_available
+                return
+        print(f"Classroom {classroom_number} not found.")
+
+    def generate_course_schedule(self, course_name, teacher_name, classroom_number, start_date_time, end_date_time, interval):
+        # 查找课程、教师和教室
+        course = None
+        teacher = None
+        classroom = None
+        for c in self.courses:
+            if c.course_name == course_name:
+                course = c
+                break
+        for t in self.teachers:
+            if t.teacher_name == teacher_name:
+                teacher = t
+                break
+        for cr in self.classrooms:
+            if cr.classroom_number == classroom_number:
+                classroom = cr
+                break
+
+        if not course or not teacher or not classroom:
+            print("Course, teacher or classroom not found.")
+            return
+
+        current_date_time = start_date_time
+        while current_date_time < end_date_time:
+            if teacher.schedule.get(current_date_time, True) and classroom.availability.get(current_date_time, True):
+                course.schedule = current_date_time
+                print(f"Course {course_name} scheduled at {current_date_time} in classroom {classroom_number} with teacher {teacher_name}.")
+            current_date_time += interval
+
+    def view_course_students(self, course_name):
+        for course in self.courses:
+            if course.course_name == course_name:
+                print(f"Students enrolled in {course.course_name}:")
+                for student in course.students_enrolled:
+                    print(student.name)
+                return
+        print(f"Course {course_name} not found.")
