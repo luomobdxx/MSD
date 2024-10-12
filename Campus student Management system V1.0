@@ -3,24 +3,24 @@ import datetime
 class Teacher:
     def __init__(self, teacher_name):
         self.teacher_name = teacher_name
-        self.schedule = {}  # 存储教师的时间安排，键为日期时间，值为布尔值表示是否空闲
+        self.schedule = {}  
 
 class Classroom:
     def __init__(self, classroom_number):
         self.classroom_number = classroom_number
-        self.availability = {}  # 存储教室的可用性，键为日期时间，值为布尔值表示是否可用
+        self.availability = {}  
 
 class Course:
     def __init__(self, course_name):
         self.course_name = course_name
         self.students_enrolled = []
-        self.schedule = None  # 新增课程安排属性
+        self.schedule = None  
 
 class CourseManagement:
     def __init__(self):
         self.courses = []
-        self.teachers = []  # 存储所有教师
-        self.classrooms = []  # 存储所有教室
+        self.teachers = []  
+        self.classrooms = []  
 
     def add_course(self, course_name):
         new_course = Course(course_name)
@@ -49,7 +49,7 @@ class CourseManagement:
         print(f"Classroom {classroom_number} not found.")
 
     def generate_course_schedule(self, course_name, teacher_name, classroom_number, start_date_time, end_date_time, interval):
-        # 查找课程、教师和教室
+        
         course = None
         teacher = None
         classroom = None
