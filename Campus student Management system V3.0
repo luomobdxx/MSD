@@ -1,0 +1,50 @@
+class StudentBasicInfo:
+    def __init__(self, student_id, name, gender, birth_date, family_info, enrollment_info):
+        self.student_id = student_id
+        self.name = name
+        self.gender = gender
+        self.birth_date = birth_date
+        self.family_info = family_info
+        self.enrollment_info = enrollment_info
+
+class StudentStatusManagement:
+    def __init__(self):
+        self.student_statuses = {}
+        self.student_basic_infos = {}  
+
+    def update_status(self, student_id, status):
+        self.student_statuses[student_id] = status
+
+    def view_status(self, student_id):
+        if student_id in self.student_statuses:
+            print(f"Status for student with ID {student_id}: {self.student_statuses[student_id]}")
+        else:
+            print(f"Student with ID {student_id} not found.")
+
+    def update_basic_info(self, student_id, name=None, gender=None, birth_date=None, family_info=None, enrollment_info=None):
+        if student_id in self.student_basic_infos:
+            if name:
+                self.student_basic_infos[student_id].name = name
+            if gender:
+                self.student_basic_infos[student_id].gender = gender
+            if birth_date:
+                self.student_basic_infos[student_id].birth_date = birth_date
+            if family_info:
+                self.student_basic_infos[student_id].family_info = family_info
+            if enrollment_info:
+                self.student_basic_infos[student_id].enrollment_info = enrollment_info
+            print(f"Basic information for student with ID {student_id} updated successfully.")
+        else:
+            print(f"Student with ID {student_id} not found.")
+
+    def view_basic_info(self, student_id):
+        if student_id in self.student_basic_infos:
+            student_info = self.student_basic_infos[student_id]
+            print(f"Student ID: {student_info.student_id}")
+            print(f"Name: {student_info.name}")
+            print(f"Gender: {student_info.gender}")
+            print(f"Birth Date: {student_info.birth_date}")
+            print(f"Family Information: {student_info.family_info}")
+            print(f"Enrollment Information: {student_info.enrollment_info}")
+        else:
+            print(f"Student with ID {student_id} not found.")
