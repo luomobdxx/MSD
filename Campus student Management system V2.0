@@ -1,0 +1,93 @@
+import datetime
+
+class Teacher:
+    def __init__(self, teacher_name):
+        self.teacher_name = teacher_name
+        self.schedule = {}  
+
+class Classroom:
+    def __init__(self, classroom_number):
+        self.classroom_number = classroom_number
+        self.availability = {}  
+
+class Exam:
+    def __init__(self, exam_name):
+        self.exam_name = exam_name
+        self.student_scores = {}
+        self.schedule = None  
+
+class ExamManagement:
+    def __init__(self):
+        self.exams = []
+        self.teachers = []  
+        self.classrooms = []  
+
+    def add_exam(self, exam_name):
+        new_exam = Exam(exam_name)
+        self.exams.append(new_exam)
+
+    def add_teacher(self, teacher_name):
+        new_teacher = Teacher(teacher_name)
+        self.teachers.append(new_teacher)
+
+    def add_classroom(self, classroom_number):
+        new_classroom = Classroom(classroom_number)
+        self.classrooms.append(new_classroom)
+
+    def set_teacher_schedule(self, teacher_name, date_time, is_available):
+        for teacher in self.teachers:
+            if teacher.teacher_name == teacher_name:
+                teacher.schedule[date_time] = is_available
+                return
+        print(f"Teacher {teacher_name} not found.")
+
+    def set_classroom_availability(self, classroom_number, date_time, is_available):
+        for classroom in self.classrooms:
+            if classroom.classroom_number == classroom_number:
+                classroom.availability[date_time] = is_available
+                return
+        print(f"Classroom {classroom_number} not found.")
+
+    def generate_exam_schedule(self, exam_name, course_name, teacher_name, classroom_number, start_date_time, end_date_time, interval):
+        
+        exam = None
+        teacher = None
+        classroom = None
+        for e in self.exams:
+            if e.exam_name == exam_name:
+                exam = e
+                break
+        for t in self.teachers:
+            if t.teacher_name == teacher_name:
+                teacher = t
+                break
+        for cr in self.classrooms:
+            if cr.classroom_number == classroom_number:
+                classroom = cr
+                break
+
+        if not exam or not teacher or not classroom:
+            print("Exam, teacher or classroom not found.")
+            return
+
+        
+        current_date_time = start_date_time
+        while current_date_time < end_date_time:
+            if teacher.schedule.get(current_date_time, True) and classroom.availability.get(current_date_time, True):
+                exam.schedule = {
+                    "time": current_date_time,
+                    "location": classroom_number,
+                    "teacher": teacher_name
+                }
+                print(f"Exam {exam_name} for course {course_name} scheduled at {current_date_time} in classroom {classroom_number} with teacher {teacher_name}.")
+                break
+            current_date_time += interval
+
+    def view_exam_scores(self, exam_name):
+        for exam in self.exams:
+            if exam.exam_name == exam_name:
+                print(f"Scores for {exam.exam_name}:")
+                for student, score in exam.student_scores.items():
+                    print(f"{student.name}: {score}")
+                return
+        print(f"Exam {exam_name} not found.")
